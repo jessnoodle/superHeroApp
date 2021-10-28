@@ -1,10 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Quando&family=Raleway:wght@300&display=swap');
+
+
+body{
+  font-family: 'Quando', serif;
+  background: url("./images/esteban-lopez-6yjAC0-OwkA-unsplash.jpg") no-repeat fixed center/cover;
+}
+
+
+
+h4 {
+  font-family: 'Raleway', sans-serif;
+}
+img {
+  max-height: 400px;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(170, 32, 32);
+}
+
+a:hover{
+  color: rgb(247, 96, 96);
+}
+
+
+/* hero animation */
 #bounce {
-    
-    margin-top: 50px;
-    border-radius: 50%;
+    border-radius: 10%;
     width: 50px;
     height: 50px;
-    color: rgb(92, 20, 20);
+    color: rgb(128, 128, 128);
     animation: bounce 1s infinite alternate;
     -webkit-animation: bounce 1s infinite alternate;
   }
@@ -20,8 +46,4 @@
   
   
   
-  img {
-      max-height: 400px;
-  }
   
- 

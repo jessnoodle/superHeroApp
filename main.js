@@ -21,10 +21,11 @@ searchButton.addEventListener('click', function () {
 
 async function searchHero (query){
     
-   // clear any previous results
+   // clear any previous results and clear the background
    heightDiv.innerHTML = ''
    imagebox.innerHTML = ''
    heroname.innerHTML = ''
+   document.body.style.background = "white";
 
    // If there a multiple results for a search, ie "Venom", "Venom II" we will take the first result and display data for that hero + Display the heros Name.
     const response = await fetch(`https://www.superheroapi.com/api.php/10165671923715611/search/${query}`)
@@ -52,7 +53,6 @@ async function searchHero (query){
  } else {
     heightDiv.append(`${name} is ` + height + `ft tall`)  
  }
- 
 }
   
 
@@ -61,10 +61,11 @@ async function searchHero (query){
   
 async function randomHero() {
     
-    // clear any previous results
+    // clear any previous results + clear background
     heightDiv.innerHTML = ''
     imagebox.innerHTML = ''
     heroname.innerHTML = ''
+    document.body.style.background = "white";
     
     // First pick a random number between 1 - 731(How many heros in the API) and searches for the random ID
     const id = Math.floor(Math.random() * (731 - 1 + 1)) + 1;
