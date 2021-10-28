@@ -9,7 +9,6 @@ const heroname = document.getElementById("heroname")
 // ^Dynamic content variables
 
 
-
 // Finds what hero the user searches for and saves that into a variable - "query"
 searchButton.addEventListener('click', function () {
     const query = searchBox.value
@@ -17,67 +16,81 @@ searchButton.addEventListener('click', function () {
 })
 
 
-// Takes that user searches for, searches in API for hero and returns image, height info 
+// This function takes what user searches for, searches in API for hero and returns image, height info 
+
+
 async function searchHero (query){
     
    // clear any previous results
    heightDiv.innerHTML = ''
    imagebox.innerHTML = ''
+   heroname.innerHTML = ''
 
+   // If there a multiple results for a search, ie "Venom", "Venom II" we will take the first result and display data for that hero + Display the heros Name.
     const response = await fetch(`https://www.superheroapi.com/api.php/10165671923715611/search/${query}`)
     const data = await response.json()
     console.log(data)
     
-    // If there a multiple results for a search, ie "Venom", "Venom II" we will take the first result and display data for that hero + Display the heros Name.
+
+    
+    // Saving results of height, name of hero and heros' image
     const height = data.results[0].appearance.height[0]
-    heightDiv.append(height) 
-    let name = data.results[0].name
+    const  name = data.results[0].name
+   
+    
+    // Displays heros name
     heroname.append(name) 
-    console.log(name)
-    
-    
-    // Testing to see if can return alias info too
-    // console.log(data.results[0].biography.aliases)
-    // const aliases = data.results[0].biography.aliases
-    // info.append(aliases)
     
     // Returns image results and displays in Image Div
-    const image = data.results[0].image.url
     let newImg = document.createElement('img')
     newImg.src = data.results[0].image.url
     imagehere.append(newImg)
-
+    
+    // If height recorded, display it to user. If not, send an error message.
+ if (height == "-"){
+    heightDiv.append(`Sorry, there was no height recorded for ${name}. Maybe they are really short and want to keep it a secret.`) 
+ } else {
+    heightDiv.append(`${name} is ` + height + `ft tall`)  
+ }
+ 
 }
+  
 
 
 // Random hero function
   
 async function randomHero() {
-    // First pick a random number betwen 1 - 731(How many heros in the API)
-    const id = Math.floor(Math.random() * (731 - 1 + 1)) + 1;
-    console.log(id)
     
     // clear any previous results
     heightDiv.innerHTML = ''
     imagebox.innerHTML = ''
     heroname.innerHTML = ''
     
-    
+    // First pick a random number between 1 - 731(How many heros in the API) and searches for the random ID
+    const id = Math.floor(Math.random() * (731 - 1 + 1)) + 1;
     const response = await fetch(`https://www.superheroapi.com/api.php/10165671923715611/${id}`)
     const data = await response.json()
     console.log(data)
     
+    // Saving name and height data
     const height = data.appearance.height[0]
-    const image = data.image.url
     const name = data.name
     
-    heightDiv.append(height) 
+    // Add heros name to top of card
     heroname.append(name) 
+    
+    // If height was recorded, display to user
+    if (height == "-"){
+        heightDiv.append(`Sorry, there was no height recorded for ${name}. Maybe they are really short and want to keep it a secret.`) 
+     } else {
+        heightDiv.append(`${name} is ` + height + `ft tall`) 
+    
+     }
 
-    console.log(height)
-    console.log(name)
+    // add heros image
     let newImg = document.createElement('img')
     newImg.src = data.image.url
     imagehere.append(newImg)
     
 }
+
