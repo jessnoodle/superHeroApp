@@ -30,7 +30,6 @@ function clear (){
 }
 
 // This function takes what user searches for, searches in API for hero and returns image, height info 
-
 async function searchHero (query){
      clear ()
 
