@@ -8,6 +8,11 @@ const imagebox = document.getElementById("imagehere")
 const heroname = document.getElementById("heroname")
 // ^Dynamic content variables
 
+// Saves search in local storage
+window.addEventListener('load', function(){
+   let lastQuery = localStorage.getItem("query");
+   searchBox.value = lastQuery;
+   })
 
 // Finds what hero the user searches for and saves that into a variable - "query"
 searchButton.addEventListener('click', function () {
@@ -15,9 +20,7 @@ searchButton.addEventListener('click', function () {
     searchHero(query)
 })
 
-
 // This function takes what user searches for, searches in API for hero and returns image, height info 
-
 
 async function searchHero (query){
     
@@ -31,32 +34,35 @@ async function searchHero (query){
     const response = await fetch(`https://www.superheroapi.com/api.php/10165671923715611/search/${query}`)
     const data = await response.json()
     console.log(data)
-    
-
-    
-    // Saving results of height, name of hero and heros' image
-    const height = data.results[0].appearance.height[0]
-    const  name = data.results[0].name
    
-    
-    // Displays heros name
-    heroname.append(name) 
-    
-    // Returns image results and displays in Image Div
-    let newImg = document.createElement('img')
-    newImg.src = data.results[0].image.url
-    imagehere.append(newImg)
-    
+   
+      // Displays heros name or error message if can't find
+   if (data.error){
+    heroname.append("Sorry, we can't find that hero. Try again") 
+    } else {
+    heroname.append(data.results[0].name) 
+    }
+
+   // add heros image
+  let newImg = document.createElement('img')
+  newImg.src = data.results[0].image.url
+  imagehere.append(newImg)
+  
+   // Saving results of height
+   const height = data.results[0].appearance.height[0] 
+      
     // If height recorded, display it to user. If not, send an error message.
  if (height == "-"){
-    heightDiv.append(`Sorry, there was no height recorded for ${name}. Maybe they are really short and want to keep it a secret.`) 
+    heightDiv.append(`Sorry, there was no height recorded for ${data.results[0].name}. Maybe they are really short and want to keep it a secret.`) 
  } else {
-    heightDiv.append(`${name} is ` + height + `ft tall`)  
+    heightDiv.append(`${data.results[0].name} is ` + height + `ft tall`)  
  }
+//  save query 
+ query = searchBox.value;
+ localStorage.setItem('query', query);
+ 
 }
   
-
-
 // Random hero function
   
 async function randomHero() {
