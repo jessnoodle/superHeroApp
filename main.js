@@ -20,58 +20,57 @@ searchButton.addEventListener('click', function () {
     searchHero(query)
 })
 
-// This function takes what user searches for, searches in API for hero and returns image, height info 
 
-async function searchHero (query){
-    
-   // clear any previous results and clear the background
+// clear any previous results and clear the background
+function clear (){
    heightDiv.innerHTML = ''
    imagebox.innerHTML = ''
    heroname.innerHTML = ''
    document.body.style.background = "white";
+}
+
+// This function takes what user searches for, searches in API for hero and returns image, height info 
+
+async function searchHero (query){
+     clear ()
+
+   query = searchBox.value;
+   localStorage.setItem('query', query);
 
    // If there a multiple results for a search, ie "Venom", "Venom II" we will take the first result and display data for that hero + Display the heros Name.
     const response = await fetch(`https://www.superheroapi.com/api.php/10165671923715611/search/${query}`)
     const data = await response.json()
     console.log(data)
-   
-   
-      // Displays heros name or error message if can't find
+    
+   // Displays heros name or error message if can't find
    if (data.error){
     heroname.append("Sorry, we can't find that hero. Try again") 
     } else {
-    heroname.append(data.results[0].name) 
-    }
+     const name =  data.results[0].name
+    heroname.append(name) 
 
-   // add heros image
+     // Saving results of height
+   const height = data.results[0].appearance.height[0] 
+      
+   // If height recorded, display it to user. If not, send an error message.
+if (height == "-"){
+   heightDiv.append(`Sorry, there was no height recorded for ${name}. Maybe they are really short and want to keep it a secret.`) 
+} else {
+   heightDiv.append(`${name} is ` + height + `ft tall`)  
+}  
+
+//  add heros image
   let newImg = document.createElement('img')
   newImg.src = data.results[0].image.url
   imagehere.append(newImg)
-  
-   // Saving results of height
-   const height = data.results[0].appearance.height[0] 
-      
-    // If height recorded, display it to user. If not, send an error message.
- if (height == "-"){
-    heightDiv.append(`Sorry, there was no height recorded for ${data.results[0].name}. Maybe they are really short and want to keep it a secret.`) 
- } else {
-    heightDiv.append(`${data.results[0].name} is ` + height + `ft tall`)  
- }
-//  save query 
- query = searchBox.value;
- localStorage.setItem('query', query);
- 
-}
+   console.log(newImg.src)
+
+}}
   
 // Random hero function
   
 async function randomHero() {
-    
-    // clear any previous results + clear background
-    heightDiv.innerHTML = ''
-    imagebox.innerHTML = ''
-    heroname.innerHTML = ''
-    document.body.style.background = "white";
+   clear ()
     
     // First pick a random number between 1 - 731(How many heros in the API) and searches for the random ID
     const id = Math.floor(Math.random() * (731 - 1 + 1)) + 1;
