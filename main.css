@@ -3,7 +3,7 @@
 
 body{
   font-family: 'Quando', serif;
-  background: url("./images/esteban-lopez-6yjAC0-OwkA-unsplash.jpg") no-repeat fixed center/cover;
+  background: url("./images/hero.jpg") no-repeat fixed center/cover;
 }
 
 
@@ -25,23 +25,7 @@ a:hover{
 }
 
 
-/* hero animation */
-#bounce {
-    border-radius: 10%;
-    width: 50px;
-    height: 50px;
-    color: rgb(128, 128, 128);
-    animation: bounce 1s infinite alternate;
-    -webkit-animation: bounce 1s infinite alternate;
-  }
-  @keyframes bounce {
-    from {
-      transform: translateY(0px);
-    }
-    to {
-      transform: translateY(-15px);
-    }
-  }
+
   
   
   
