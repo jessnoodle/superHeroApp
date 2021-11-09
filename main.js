@@ -21,7 +21,7 @@ searchButton.addEventListener('click', function () {
 })
 
 
-// Clear any previous results and change the bakcground to white.
+// Clear any previous results and change the background to white.
 function clear (){
    heightDiv.innerHTML = ''
    imagebox.innerHTML = ''
