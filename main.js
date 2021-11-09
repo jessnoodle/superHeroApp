@@ -14,14 +14,14 @@ window.addEventListener('load', function(){
    searchBox.value = lastQuery;
    })
 
-// Finds what hero the user searches for and saves that into a variable - "query"
+// Finds what hero the user searches for and saves that into a query variable.
 searchButton.addEventListener('click', function () {
     const query = searchBox.value
     searchHero(query)
 })
 
 
-// clear any previous results and clear the background
+// Clear any previous results and change the bakcground to white.
 function clear (){
    heightDiv.innerHTML = ''
    imagebox.innerHTML = ''
@@ -29,14 +29,14 @@ function clear (){
    document.body.style.background = "white";
 }
 
-// This function takes what user searches for, searches in API for hero and returns image, height info 
+// This function takes what user searches for, searches in API for hero and returns image and height info 
 async function searchHero (query){
      clear ()
 
    query = searchBox.value;
    localStorage.setItem('query', query);
 
-   // If there a multiple results for a search, ie "Venom", "Venom II" we will take the first result and display data for that hero + Display the heros Name.
+   
     const response = await fetch(`https://www.superheroapi.com/api.php/10165671923715611/search/${query}`)
     const data = await response.json()
     console.log(data)
@@ -45,6 +45,7 @@ async function searchHero (query){
    if (data.error){
     heroname.append("Sorry, we can't find that hero. Try again") 
     } else {
+       // If there a multiple results for a search, ie "Venom", "Venom II" we will take the first ([0]) result and display data for that hero 
      const name =  data.results[0].name
     heroname.append(name) 
 
